@@ -1,7 +1,7 @@
 {
-	"ctf_name": "NIZKCTF upstream",
+	"ctf_name": "Ranking CTF-BR 2019",
 	"repository_host": "GitHub",
-	"submissions_project": "pwn2winctf/test_submissions",
+	"submissions_project": "ctf-br/ranking_submissions",
 
 	"scrypt_ops_limit": 33554432,
 	"scrypt_mem_limit": 402653184,
