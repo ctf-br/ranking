@@ -12,8 +12,8 @@
 
 3. Clone o repositório e instale as dependências:
    ```bash
-   git clone git@github.com:ctf-br/NIKCTF.git
-   cd NIKCTF
+   git clone git@github.com:ctf-br/ranking.git
+   cd ranking
    sudo apt-get install libsodium18
    curl https://bootstrap.pypa.io/get-pip.py | sudo -H python
    sudo -H python -m pip install -r pip-requirements.txt
