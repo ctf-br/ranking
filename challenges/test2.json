@@ -1,1 +1,1 @@
-{"description": "testing again", "title": "test2", "tags": ["Rev"], "pk": "W3klX7HY3kbp5Br0iYzSnMdqnXvEuzj0CurpibdXbVo=", "salt": "3CO3VFgz1qkZ1AeW+XCR4dZtvJtrrdZ51nDuglWA3+o=", "id": "test2"}
+{"description": "testing again", "title": "test2", "tags": ["Rev"], "pk": "2QM5G2mY7inST70KRrBjVkZHz3yTgXgcBd46mIdvBUw=", "salt": "u/akzRt29Fe58Z7DT53YyA==", "id": "test2", "opslimit": 3, "memlimit": 268435456}

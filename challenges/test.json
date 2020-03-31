@@ -1,1 +1,1 @@
-{"description": "testing", "title": "test", "tags": ["Pwn"], "pk": "goXJ6COr4wa+zn3S/57u8XPheH7ikb4NL8e3rPEsB7w=", "salt": "dl4yjxev1RT4rFQXdH/8bXgqBRWAR+JaqA7jjU9iDQ0=", "id": "test"}
+{"description": "testing", "title": "test", "tags": ["Pwn"], "pk": "AwTtUaLtzpHyxVY0oQvEP398tPPK8iLKjsjgmvjn+y8=", "salt": "KoVNy6Blq3vFpmdgAXO9MQ==", "id": "test", "opslimit": 2, "memlimit": 67108864}
