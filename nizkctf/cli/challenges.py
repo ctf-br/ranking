@@ -31,7 +31,7 @@ def submit_flag(flag, chall_id=None):
         return False, 'Your team already solved %s.' % chall.id
 
     proof = proof_create(chall.id, chall_sk)
-    submissions.submit(proof)
+    submissions.submit(chall.id, proof)
     SubRepo.push(commit_message='Proof: found flag for %s' % chall.id)
 
     return True, 'Congratulations! You found the right flag for %s.' % chall.id

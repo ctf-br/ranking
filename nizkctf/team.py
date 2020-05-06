@@ -4,6 +4,7 @@ from __future__ import unicode_literals, division, print_function,\
                        absolute_import
 import os
 import re
+from glob import glob
 import hashlib
 import pysodium
 from .six import text_type
@@ -17,7 +18,6 @@ from .cli.teamsecrets import TeamSecrets
 
 TEAM_FILE = 'team.json'
 MEMBERS_FILE = 'members.json'
-SUBMISSIONS_FILE = 'submissions.csv'
 
 
 class Team(SerializableDict):
@@ -133,19 +133,21 @@ class TeamMembers(SerializableList):
 class TeamSubmissions(object):
     def __init__(self, team):
         self.team = team
-        self.path = os.path.join(team.dir(), SUBMISSIONS_FILE)
 
-    def submit(self, proof):
+    def submit(self, chall_id, proof):
         assert isinstance(proof, bytes)
-        with open(self.path, 'ab') as f:
+        with open(os.path.join(self.team.dir(), chall_id) + '.csv', 'ab') as f:
             f.write(proof + b'\n')
 
     def challs(self):
         r = []
-        if os.path.exists(self.path):
-            with open(self.path, 'rb') as f:
-                for proof in f:
-                    r.append(proof_open(self.team, proof.strip()))
+        for path in glob(os.path.join(self.team.dir(), '*.csv')):
+            with open(path, 'rb') as f:
+                proofs = f.readlines()
+                if len(proofs) != 1:
+                    raise ValueError('Only one proof admitted per file')
+                proof, = proofs
+                r.append(proof_open(self.team, proof.strip()))
         if len(set(r)) != len(r):
             raise ValueError('Team submissions contain repeated challenges')
         return r
