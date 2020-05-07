@@ -13,3 +13,5 @@
 # wingide
 *.wpr
 *.wpu
+
+.env.yaml
