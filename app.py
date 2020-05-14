@@ -4,9 +4,6 @@ import os
 import yaml
 import flask
 
-from main import handle
-
-
 config_dict = {}
 try:
     with open('.env.yaml', 'r') as config_stream:
@@ -17,6 +14,7 @@ except Exception as e:
 for config_name in config_dict:
     os.environ[config_name] = config_dict[config_name]
 
+from main import handle
 
 app = flask.Flask(__name__)
 
