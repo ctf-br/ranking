@@ -1,2 +1,3 @@
 requests[security] >= 2.13.0
 pysodium >= 0.7.4.1
+firebase-admin
