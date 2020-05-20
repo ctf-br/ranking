@@ -11,7 +11,9 @@ from .six import text_type
 from .subrepo import SubRepo
 from .serializable import SerializableList
 
+from .firebase import saveToFirebase
 
+NEWS_RTDB = '/news'
 NEWS_FILE = 'news.json'
 
 
@@ -23,6 +25,7 @@ class News(SerializableList):
 
     def path(self):
         return SubRepo.get_path(NEWS_FILE)
+
 
     def add(self, msg_text, to=None):
         current_time = int(time.time())
@@ -40,3 +43,4 @@ class News(SerializableList):
 
         self.append(message)
         self.save()
+        saveToFirebase(NEWS_RTDB, self._serialize())

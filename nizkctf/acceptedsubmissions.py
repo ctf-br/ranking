@@ -9,18 +9,9 @@ from .subrepo import SubRepo
 from .serializable import SerializableDict
 from .scoring import compute_points
 
-import firebase_admin
-from firebase_admin import db
-from firebase_admin import credentials
+from .firebase import saveToFirebase
 
-# Fetch the service account key JSON file contents
-cred = credentials.Certificate(os.environ['SERVICE_ACCOUNT'])
-
-default_app = firebase_admin.initialize_app(cred, {
-    'databaseURL' : os.environ['DATABASE_URL']
-})
-
-ACCEPTED_SUBMISSIONS_RTDB = db.reference('/accepted-submissions')
+ACCEPTED_SUBMISSIONS_RTDB = '/accepted-submissions'
 ACCEPTED_SUBMISSIONS_FILE = 'accepted-submissions.json'
 
 
@@ -76,9 +67,6 @@ class AcceptedSubmissions(SerializableDict):
         for i, standing in enumerate(standings):
             standing['pos'] = i + 1
 
-    def saveToFirebase(self):
-        ACCEPTED_SUBMISSIONS_RTDB.set(self['standings'])
-
     def add(self, chall, team):
         chall_id = chall.id
         team_name = team['name']
@@ -100,4 +88,4 @@ class AcceptedSubmissions(SerializableDict):
         self.recompute_score(chall)
         self.rank()
         self.save()
-        self.saveToFirebase()
+        saveToFirebase(ACCEPTED_SUBMISSIONS_RTDB, self['standings'])
