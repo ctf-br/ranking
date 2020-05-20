@@ -24,7 +24,11 @@ def handle(request):
         # Message not of our interest (e.g. merge request closed)
         return abort(400)
 
-    return run(merge_info)
+    try:
+        return run(merge_info)
+    except Exception as e:
+        # Send tracking number to the user
+        return send_cloudwatch_info(merge_info, e, request)
 
 
 def run(merge_info):
@@ -39,12 +43,15 @@ def run(merge_info):
     return 'Great!'
 
 
-def send_cloudwatch_info(merge_info, exception):
+def send_cloudwatch_info(merge_info, exception, request):
     proj = Settings.submissions_project
     mr_id = merge_info['mr_id']
 
     comment = 'Sorry. A failure has occurred when processing your proposal.\n' \
-              '{}'.format(str(exception))
+              '**Reason**: %s\n\n' \
+              'Please contact support and present the following info:\n' \
+              '**Request ID**: %s\n' % \
+              (str(exception), request.headers.get('Function-Execution-Id'))
 
     repohost = RepoHost.instance()
     repohost.mr_comment(proj, mr_id, comment)
