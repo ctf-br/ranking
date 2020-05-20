@@ -15,7 +15,7 @@ from .serializable import SerializableDict, SerializableList
 from .proof import proof_open
 from .cli.teamsecrets import TeamSecrets
 
-
+REGISTERED_USERS = 'registered-users.json'
 TEAM_FILE = 'team.json'
 MEMBERS_FILE = 'members.json'
 
@@ -97,6 +97,30 @@ class Team(SerializableDict):
         assert isinstance(self['sign_pk'], bytes)
         if len(self['sign_pk']) != pysodium.crypto_sign_PUBLICKEYBYTES:
             raise ValueError("Team's sign_pk has incorrect size")
+
+
+class RegisteredUsers(SerializableDict):
+    pretty_print = True
+
+    def __init__(self):
+        super(RegisteredUsers, self).__init__()
+        self.setdefault('github', {})
+        self.setdefault('gitlab', {})
+
+    def path(self):
+        return os.path.join(SubRepo.get_path(), REGISTERED_USERS)
+
+    def add(self, user_id, team_name):
+        assert isinstance(user_id, int) or isinstance(user_id, long)
+        assert isinstance(team_name, text_type)
+
+        users_dict = self[Settings.repository_host.lower()]
+        user_id = str(user_id)
+
+        if user_id not in users_dict:
+            users_dict[user_id] = team_name
+
+        self.save()
 
 
 class TeamMembers(SerializableList):

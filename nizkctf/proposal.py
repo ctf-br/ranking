@@ -10,7 +10,7 @@ import subprocess
 from .settings import Settings
 from .repohost import RepoHost
 from .subrepo import SubRepo
-from .team import Team, TEAM_FILE
+from .team import Team, RegisteredUsers, TEAM_FILE
 from .acceptedsubmissions import AcceptedSubmissions
 
 
@@ -110,6 +110,9 @@ def add_member(team, merge_info):
 
     team.members().add(id=merge_info['user_id'],
                        username=merge_info['username'])
+
+    RegisteredUsers().add(user_id=merge_info['user_id'],
+                       team_name=team['name'])
 
 
 def accept_proposal(merge_info, retries=PUSH_RETRIES):
