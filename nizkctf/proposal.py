@@ -86,9 +86,9 @@ def flag_submission(merge_info, added_file):
     challs_after = set(team.submissions().challs())
 
     new_challs = challs_after - challs_before
-    assert len(new_challs) == 1
+    assert len(new_challs) == 1 , 'Must submit just 1 challenge'
     chall, = new_challs
-    assert chall.id == chall_id
+    assert chall.id == chall_id , 'Challenge ID does not match'
 
     def local_changes():
         # Back to branch, do local modifications

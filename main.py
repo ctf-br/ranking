@@ -27,6 +27,8 @@ def handle(request):
     try:
         return run(merge_info)
     except Exception as e:
+        print(e)
+        print(traceback.format_exc())
         # Send tracking number to the user
         return send_cloudwatch_info(merge_info, e, request)
 
